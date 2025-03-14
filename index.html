@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juego de Dados</title>
+    <link rel="stylesheet" href="stlyes.css" />
+  </head>
+  <body>
+    <div class="game-container">
+      <h1>Juego de Dados</h1>
+      <div class="dice-container">
+        <div class="dice" id="dice1">🎲</div>
+        <div class="dice" id="dice2">🎲</div>
+      </div>
+      <p id="result">¡Lanza los dados!</p>
+      <button id="rollDice">Lanzar Dados</button>
+      <p>Puntaje: <span id="score">0</span></p>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+<script>
+  document.getElementById("rollDice").addEventListener("click", function () {
+    let dice1El = document.getElementById("dice1");
+    let dice2El = document.getElementById("dice2");
+
+    // Agregar animación de rotación
+    dice1El.style.transform = "rotate(360deg)";
+    dice2El.style.transform = "rotate(360deg)";
+
+    // Retrasar el cambio de número para que se vea la animación
+    setTimeout(() => {
+      let dice1 = Math.floor(Math.random() * 6) + 1;
+      let dice2 = Math.floor(Math.random() * 6) + 1;
+
+      dice1El.textContent = getDiceFace(dice1);
+      dice2El.textContent = getDiceFace(dice2);
+
+      let total = dice1 + dice2;
+      document.getElementById("result").textContent = `Sacaste un ${total}`;
+
+      let score = parseInt(document.getElementById("score").textContent);
+      document.getElementById("score").textContent = score + total;
+
+      // Restablecer la rotación para el próximo lanzamiento
+      dice1El.style.transform = "rotate(0deg)";
+      dice2El.style.transform = "rotate(0deg)";
+    }, 500); // La animación dura 0.5 segundos antes de cambiar los valores
+  });
+
+  function getDiceFace(number) {
+    const faces = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
+    return faces[number - 1];
+  }
+</script>
